@@ -1,4 +1,5 @@
-from type_definitions import School, SchoolDescription, Recommendation
+from dataclasses import asdict
+from type_definitions import School, SchoolDescription, Recommendation, UserResponse
 
 import json
 import re
@@ -45,22 +46,22 @@ class DataParser:
         return positions
 
     @classmethod
-    def GetScoolsList(self, ai_response: str) -> [str]:
-        university_response = ""
+    def GetScoolsList(self, ai_response: str) -> [School]:
+        # university_response = ""
         school_list = []
         index = 0
 
-        with open("data_parser/UniversitiesExample.txt") as uni_file:
-            university_response = uni_file.read()
-            uni_file.close()
+        # with open("data_parser/UniversitiesExample.txt") as uni_file:
+        #     university_response = uni_file.read()
+        #     uni_file.close()
 
-        for line in university_response.splitlines():
+        for line in ai_response.splitlines():
             school_name_match = re.match(r"[0-9](.*)", line)
             faculty_match = re.match(r"   - Faculty: ", line)
             website_match = re.match(r"   - Website: ", line)
 
             if school_name_match:
-                school_list.append(School(line, SchoolDescription("", "")))
+                school_list.append(School(line[3:], SchoolDescription("", "")))
 
             if faculty_match:
                 school_list[index].description.faculty = line[14:]
@@ -68,9 +69,18 @@ class DataParser:
             if website_match:
                 school_list[index].description.website = line[14:]
                 index = index + 1
+
+        return school_list
                 
     @classmethod
     def CreateRecommendation(self, position: str, school_list: School) -> Recommendation:
         return Recommendation(position, school_list)
+    
+    @classmethod
+    def CreateResponse(self, recommendations: [Recommendation]) -> str:
+        user_output = UserResponse("recommendation", recommendations)
+        json_output = json.dumps(asdict(user_output), indent=4)
 
-# DataParser.GetScoolsList("")
+        return json_output
+
+# print(DataParser.CreateResponse([DataParser.CreateRecommendation("Elektryk", DataParser.GetScoolsList(""))]))
