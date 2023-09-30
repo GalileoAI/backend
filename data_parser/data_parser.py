@@ -1,3 +1,5 @@
+from type_definitions import School, SchoolDescription, Recommendation
+
 import json
 import re
 
@@ -42,8 +44,33 @@ class DataParser:
 
         return positions
 
-
     @classmethod
-    def GetScools(self, ai_response: str) -> [str]:
-        pass
+    def GetScoolsList(self, ai_response: str) -> [str]:
+        university_response = ""
+        school_list = []
+        index = 0
 
+        with open("data_parser/UniversitiesExample.txt") as uni_file:
+            university_response = uni_file.read()
+            uni_file.close()
+
+        for line in university_response.splitlines():
+            school_name_match = re.match(r"[0-9](.*)", line)
+            faculty_match = re.match(r"   - Faculty: ", line)
+            website_match = re.match(r"   - Website: ", line)
+
+            if school_name_match:
+                school_list.append(School(line, SchoolDescription("", "")))
+
+            if faculty_match:
+                school_list[index].description.faculty = line[14:]
+
+            if website_match:
+                school_list[index].description.website = line[14:]
+                index = index + 1
+                
+    @classmethod
+    def CreateRecommendation(self, position: str, school_list: School) -> Recommendation:
+        return Recommendation(position, school_list)
+
+# DataParser.GetScoolsList("")

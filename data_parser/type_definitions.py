@@ -14,9 +14,14 @@ class Questionare:
     questions: list[Question]
 
 @dataclass
+class SchoolDescription:
+    faculty: str
+    website: str
+
+@dataclass
 class School:
     name: str
-    description: str
+    description: SchoolDescription
 
 @dataclass
 class Recommendation:
@@ -28,7 +33,7 @@ class UserResponse:
     header: str
     positions: list[Recommendation]
 
-# u_resp = UserResponse("recommendation", [Recommendation("Engineer", [School("UMK", "Blabla")]), Recommendation("Budowlaniec", [School("Technikum budowlane", "blabla")])])
+# u_resp = UserResponse("recommendation", [Recommendation("Engineer", [School("UMK", SchoolDescription("faculty1", "www."))]), Recommendation("Budowlaniec", [School("Technikum budowlane", SchoolDescription("faculty1", "www.123"))])])
 # ur_json = json.dumps(asdict(u_resp), indent=4)
 # print(ur_json)
 
