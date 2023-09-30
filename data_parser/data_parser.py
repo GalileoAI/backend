@@ -17,7 +17,17 @@ class DataParser:
 
         return questionare_str
     
-    # @classmethod
-    # def AnswersToPrompt(seld, answers: str):
+    @classmethod
+    def AnswersToPrompt(self, answers: str) -> str:
+        preparation_str = ""
+        ai_query = ""
+        questionare_with_answers = json.loads(answers)
 
-print(DataParser.GetQuestionare("before"))
+        if "questions" in questionare_with_answers:
+            result_list = questionare_with_answers["questions"]
+
+            for result in result_list:
+                ai_query = ai_query + "Question " + result["id"] + ": " + result["question_str"] + "\n"
+                ai_query = ai_query + "Answer to question " + result["id"] + ": " + result["answer_str"] + "\n"
+
+        return ai_query
