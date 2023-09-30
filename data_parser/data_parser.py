@@ -1,4 +1,5 @@
 import json
+import re
 
 
 class DataParser:
@@ -11,15 +12,14 @@ class DataParser:
         questionare_file_path = self.questionare_base_path + qkey + self.questionare_file_name
 
         with open(questionare_file_path , "r") as questioare:
-            questionare_str = json.load(questioare)
-            questionare_str = json.dumps(questionare_str, indent=4)
+            questionare_json = json.load(questioare)
+            questionare_str = json.dumps(questionare_json, indent=4)
             questioare.close()
 
         return questionare_str
     
     @classmethod
-    def AnswersToPrompt(self, answers: str) -> str:
-        preparation_str = ""
+    def AnswersToPrompt(self, answers: str) -> str: 
         ai_query = ""
         questionare_with_answers = json.loads(answers)
 
@@ -31,3 +31,19 @@ class DataParser:
                 ai_query = ai_query + "Answer to question " + result["id"] + ": " + result["answer_str"] + "\n"
 
         return ai_query
+
+    @classmethod
+    def GetPositionsList(self, ai_response: str) -> [str]:
+        positions: [str]
+
+        for line in ai_response.splitlines():
+            result = re.split(":", line)
+            positions.append(result[0][3:])
+
+        return positions
+
+
+    @classmethod
+    def GetScools(self, ai_response: str) -> [str]:
+        pass
+
