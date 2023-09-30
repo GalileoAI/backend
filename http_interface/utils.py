@@ -1,5 +1,7 @@
 import datetime
-MESSAGES_FILE_PATH = "logs/messages.txt"
+import os
+
+MESSAGES_FILE_PATH = os.path.dirname(os.path.abspath(__file__)) + "/logs/messages.txt"
 
 
 def save_message(message, initialized=False):
