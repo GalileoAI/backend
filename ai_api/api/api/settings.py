@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-^%@iico&u5r2!bqh%kqz5(hq2lma7_9l6nei=k1a^-g$%y1+uq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['b38f-213-25-77-242.ngrok-free.app', '127.0.0.1', 'conviction-personality-meet-pty.trycloudflare.com']
 
 
 # Application definition
@@ -102,7 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
+# Internationalizationx
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
