@@ -1,5 +1,5 @@
-import api_communication
-import utils
+from . import api_communication
+from . import utils
 
 
 class GPTClient:
@@ -30,7 +30,7 @@ class GPTClient:
             self.messages.append(message)
             utils.save_message(message)
 
-            return message
+            return message["content"]
         else:
             raise Exception(f"Api Exception {response.status_code}")
 
