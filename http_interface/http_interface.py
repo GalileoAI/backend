@@ -13,10 +13,23 @@ class GPTClient:
         ]
         utils.save_message(self.messages[-1], initialized=True)
 
-    def send_prompt(self, prompt):
+    def jobs_by_questionare(self, questionare) -> str:
+        self.send_prompt("system", f"Remember the answers given by the student on this questionare: {questionare}")
+        self.send_prompt("system", "You give a json string as an answer where every position has name and description")
+        jobs = self.send_prompt("user", "What 5 jobs would be the most suitable for the student?")
+        jobs.replace("\n", "")
+        return jobs
+
+    def schools_by_job(self, job):
+        self.send_prompt("system", f"Answer all questions based on this career path chosen by the student: {job}")
+        self.send_prompt("system", "You give a json string as an answer where every position has name and description")
+        schools = self.send_prompt("user", "What are the 5 best universities in Poland that offer faculties related to this career path")
+        return schools
+
+    def send_prompt(self, role, prompt):
         self.messages.append(
             {
-                "role": "user",
+                "role": role,
                 "content": prompt
             }
         )
@@ -33,5 +46,7 @@ class GPTClient:
             return message["content"]
         else:
             raise Exception(f"Api Exception {response.status_code}")
+
+
 
 
