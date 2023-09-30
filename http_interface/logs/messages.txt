@@ -1,0 +1,4 @@
+
+Client Initialization 2023-09-30 14:01:23.925164
+2023-09-30 14:01:23.925164: {'role': 'system', 'content': 'You are a chatbot'}
+2023-09-30 14:01:31.548018: {'role': 'assistant', 'content': "Hello! I'm an AI chatbot, so I don't have feelings, but I'm here to assist you. How can I help you today?"}
