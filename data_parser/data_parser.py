@@ -36,7 +36,7 @@ class DataParser:
 
     @classmethod
     def GetPositionsList(self, ai_response: str) -> [str]:
-        positions: [str]
+        positions = []
 
         for line in ai_response.splitlines():
             result = re.split(":", line)
