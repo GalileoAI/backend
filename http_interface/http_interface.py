@@ -15,8 +15,8 @@ class GPTClient:
 
     def jobs_by_questionare(self, questionare) -> str:
         self.save_message("system", f"Remember the answers given by the student on this questionare: {questionare}")
+        self.save_message("system", "As a content of your message you only give the list, no headers or footers")
         self.save_message("system", "For every job you give a name, and description after : sign")
-        self.save_message("system", "You only give the list, no headers or footers")
         jobs = self.send_prompt("user", "What 5 jobs would be the most suitable for the student?")
         jobs.replace("\n", "")
         return jobs
