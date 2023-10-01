@@ -3,12 +3,37 @@
     "questions": [
         {
             "id": "1",
-            "question_str": "after",
+            "question_str": "Jakie sa Twoje pasje i zainteresowania?",
             "answer_str": ""
         },
         {
             "id": "2",
-            "question_str": "after",
+            "question_str": "Jakie Twoje umiejetnosci i zdolnosci wydaja Ci sie wyrozniajace?",
+            "answer_str": ""
+        },
+        {
+            "id": "3",
+            "question_str": "Ktore przedmioty w szkole sprawiaja Ci najwiecej klopotow i nie czujesz sie w nich dobrze?",
+            "answer_str": ""
+        },
+        {
+            "id": "4",
+            "question_str": "Czy istnieja zawody lub dziedziny, ktore Cie szczegolnie fascynuja?",
+            "answer_str": ""
+        },
+        {
+            "id": "5",
+            "question_str": "Czy jestes zmotywowana/y poswiecic czas i wysilek na zdobywanie wiedzy?",
+            "answer_str": ""
+        },
+        {
+            "id": "6",
+            "question_str": "Czy masz w glowie cele / marzenia, ktore chcialabys / chcialbys osiagnac?",
+            "answer_str": ""
+        },
+        {
+            "id": "7",
+            "question_str": "Czy planujesz zdobywac wyksztalcenie wyzsze, uczeszczac na kursy zawodowe czy moze rozwarzasz alternatywne sciezki kariery?",
             "answer_str": ""
         }
     ]

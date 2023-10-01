@@ -15,7 +15,7 @@ class GPTClient:
 
     def jobs_by_questionare(self, questionare) -> str:
         self.save_message("system", f"Remember the answers given by the student on this questionare: {questionare}")
-        self.save_message("system", "As a content of your message you only give the list, no headers or footers")
+        self.save_message("system", "As a content of your message you only give the list, no headers or footers, just the bullet point list without any comments or summaries")
         self.save_message("system", "For every job you give a name, and description after : sign")
         jobs = self.send_prompt("user", "What 5 jobs would be the most suitable for the student?")
         jobs.replace("\n", "")
@@ -23,9 +23,8 @@ class GPTClient:
 
     def schools_by_job(self, job):
         self.save_message("system", f"Answer all questions based on this career path chosen by the student: {job}")
-        self.save_message("system", "For every school you give a name, and faculty and website as bullet points")
-        self.save_message("system", "You only give the list, no headers or footers")
-        schools = self.send_prompt("user", "What are the 5 best universities in Poland that offer faculties related to this career path")
+        self.save_message("system", "Your list is in the following format: <number>. <school name>:\n  - Faculty: <faculty>\n  - Website: <website>. Restrict your output only to one value for 'Faculty' and one value for 'Website")
+        schools = self.send_prompt("user", "What are the 3 best universities in Poland that offer faculties related to this career path")
         return schools
 
     def save_message(self, role, prompt):

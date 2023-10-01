@@ -1,5 +1,5 @@
 from dataclasses import asdict
-from type_definitions import School, SchoolDescription, Recommendation, UserResponse
+from . import type_definitions
 
 import json
 import re
@@ -54,7 +54,7 @@ class DataParser:
         return positions[:-1]
 
     @classmethod
-    def GetScoolsList(self, ai_response: str) -> [School]:
+    def GetScoolsList(self, ai_response: str) -> [type_definitions.School]:
         # university_response = ""
         school_list = []
         index = 0
@@ -64,29 +64,30 @@ class DataParser:
         #     uni_file.close()
 
         for line in ai_response.splitlines():
+            print(line)
             school_name_match = re.match(r"[0-9](.*)", line)
-            faculty_match = re.match(r"   - Faculty: ", line)
-            website_match = re.match(r"   - Website: ", line)
+            faculty_match = re.match(r"\s*-\s*Faculty: ", line)
+            website_match = re.match(r"\s*-\s*Website: ", line)
 
             if school_name_match:
-                school_list.append(School(line[3:], SchoolDescription("", "")))
+                school_list.append(type_definitions.School(line[3:], type_definitions.SchoolDescription("", "")))
 
             if faculty_match:
-                school_list[index].description.faculty = line[14:]
+                school_list[index].description.faculty = line[13:]
 
             if website_match:
-                school_list[index].description.website = line[14:]
+                school_list[index].description.website = line[13:]
                 index = index + 1
 
         return school_list
                 
     @classmethod
-    def CreateRecommendation(self, position: str, school_list: School) -> Recommendation:
-        return Recommendation(position, school_list)
+    def CreateRecommendation(self, position: str, school_list: type_definitions.School) -> type_definitions.Recommendation:
+        return type_definitions.Recommendation(position, school_list)
     
     @classmethod
-    def CreateResponse(self, recommendations: [Recommendation]) -> str:
-        user_output = UserResponse("recommendation", recommendations)
+    def CreateResponse(self, recommendations: [type_definitions.Recommendation]) -> str:
+        user_output = type_definitions.UserResponse("recommendation", recommendations)
         json_output = json.dumps(asdict(user_output), indent=4)
 
         return json_output

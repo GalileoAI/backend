@@ -4,24 +4,35 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from data_parser.data_parser import DataParser
 import json
+from http_interface.http_interface import GPTClient
+import time
 
 @csrf_exempt
 @require_http_methods(["POST"])
 def post_data(request):
-    request_data = json.loads(request.body)
+    request_data = request.body
+    gpt = GPTClient('gpt-3.5-turbo', 'You are a chat bot')
 
-    return JsonResponse(request_data)
+    answer = DataParser.AnswersToPrompt(request_data)
+    jobs = gpt.jobs_by_questionare(answer)
+
+    positions = DataParser.GetPositionsList(jobs)
+    recommendations = []
+    for i in range(2):
+        ai_response = gpt.schools_by_job(positions[i])
+        school_list = DataParser.GetScoolsList(ai_response)
+        # print('SCHOOL LIST: ', school_list)
+        recommendation = DataParser.CreateRecommendation(positions[i], school_list)
+        # print('RECOMENDATION :', recommendation)
+        recommendations.append(recommendation)
+        time.sleep(2)
+    
+    response = DataParser.CreateResponse(recommendations)
+    
+    return HttpResponse(response)
+
 
 @csrf_exempt
-@require_http_methods(["POST"])
+@require_http_methods(["GET"])
 def get_data(request):
-    request_data = json.loads(request.body)
-    qkey = request_data.get('type')
-    
-    if qkey != "before" and qkey != "after":
-        return JsonResponse({
-            "error": "Wrong 'type' header"
-        })
-
-    response = JsonResponse(json.loads(DataParser.GetQuestionare(qkey)))
-    return response
+    return HttpResponse(DataParser.GetQuestionare('before'))

@@ -1,7 +1,7 @@
 import os
 import requests
 
-api_key = "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"
+api_key = "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"
 api_url = "https://api.openai.com/v1/chat/completions"
 
 
