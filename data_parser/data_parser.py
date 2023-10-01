@@ -38,12 +38,6 @@ class DataParser:
     @classmethod
     def GetPositionsList(self, ai_response: str) -> [str]:
         positions = []
-        
-        # input_str = ""
-        # with open("data_parser/DirtyOutput.txt") as input:
-        #     input_str = input.read()
-        #     input.close()
-        # input_str = input_str[input_str.find(":\n") + 1:]
 
         for line in ai_response.splitlines():
             result = re.split(":", line)
@@ -55,13 +49,8 @@ class DataParser:
 
     @classmethod
     def GetScoolsList(self, ai_response: str) -> [School]:
-        # university_response = ""
         school_list = []
         index = 0
-
-        # with open("data_parser/UniversitiesExample.txt") as uni_file:
-        #     university_response = uni_file.read()
-        #     uni_file.close()
 
         for line in ai_response.splitlines():
             school_name_match = re.match(r"[0-9](.*)", line)
@@ -90,6 +79,3 @@ class DataParser:
         json_output = json.dumps(asdict(user_output), indent=4)
 
         return json_output
-
-# print(DataParser.CreateResponse([DataParser.CreateRecommendation("Elektryk", DataParser.GetScoolsList(""))]))
-print(DataParser.GetPositionsList(""));
